@@ -4,9 +4,13 @@ import com.hariharan.jobapp.model.JobPost;
 import com.hariharan.jobapp.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 public class JobController {
@@ -28,6 +32,13 @@ public class JobController {
     public String handleForm(JobPost jobPost){
         service.addJob(jobPost);
         return "success";
+    }
+
+    @GetMapping("viewalljobs")
+    public String viewJobs(Model m){
+        List<JobPost> jobs = service.getAllJobs();
+        m.addAttribute("jobPosts", jobs);
+        return "viewalljobs";
     }
 
 }
